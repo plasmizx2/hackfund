@@ -1,13 +1,18 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { safeRedirectOrigin } from "@/lib/public-site-origin";
 
 /**
  * OAuth must attach session cookies to the same Response as the redirect.
  * Reading cookies from the request + writing onto NextResponse fixes
  * "exchange auth code" failures with PKCE.
+ *
+ * Uses a canonical public origin (env) for redirects — not `request.url`, which
+ * can be https://localhost:10000 when Supabase returns to an IDE preview URL.
  */
 export async function GET(request: NextRequest) {
-  const { searchParams, origin } = new URL(request.url);
+  const { searchParams } = new URL(request.url);
+  const origin = safeRedirectOrigin(request.url);
   const code = searchParams.get("code");
   const nextRaw = searchParams.get("next") ?? "/";
   const next =

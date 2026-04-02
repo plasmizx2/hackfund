@@ -1,6 +1,7 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
+import { isIdePreviewOrigin } from "@/lib/public-site-origin";
 import { useState } from "react";
 
 type Provider = "google" | "github";
@@ -18,9 +19,10 @@ export function LoginForm({
     setLoading(provider);
     setMessage(null);
     const supabase = createClient();
-    const base =
+    let base =
       oauthFromServer?.replace(/\/$/, "") ||
       process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
+    if (base && isIdePreviewOrigin(base)) base = "";
     if (!base) {
       setMessage(
         "Could not determine your site URL for sign-in. Redeploy, or set NEXT_PUBLIC_APP_URL in Render.",
