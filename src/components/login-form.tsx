@@ -5,6 +5,13 @@ import { useState } from "react";
 
 type Provider = "google" | "github";
 
+/** OAuth return URL. NEXT_PUBLIC_APP_URL must be set on Render (build-time) so preview tabs don’t use https://localhost:* */
+function oauthRedirectBase(): string {
+  const fromEnv = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
+  if (fromEnv) return fromEnv;
+  return typeof window !== "undefined" ? window.location.origin : "";
+}
+
 export function LoginForm() {
   const [loading, setLoading] = useState<Provider | null>(null);
   const [message, setMessage] = useState<string | null>(null);
@@ -13,11 +20,7 @@ export function LoginForm() {
     setLoading(provider);
     setMessage(null);
     const supabase = createClient();
-    // Prefer NEXT_PUBLIC_APP_URL so OAuth always returns to your real app URL (e.g. Render),
-    // not a preview/tunnel origin like https://localhost:10000 from an embedded browser.
-    const base =
-      (process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") || "") ||
-      window.location.origin;
+    const base = oauthRedirectBase();
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
