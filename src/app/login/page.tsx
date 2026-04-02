@@ -5,6 +5,9 @@ export default function LoginPage() {
     !!process.env.NEXT_PUBLIC_SUPABASE_URL &&
     !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+  const oauthRedirectBase =
+    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") || undefined;
+
   if (!hasEnv) {
     return (
       <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background px-6">
@@ -49,7 +52,7 @@ export default function LoginPage() {
         </div>
 
         <div className="hf-card p-8 shadow-2xl shadow-black/50">
-          <LoginForm />
+          <LoginForm oauthRedirectBase={oauthRedirectBase} />
           <p className="mt-6 text-center text-xs text-muted-foreground">
             OAuth only — no password. Enable Google or GitHub in Supabase →
             Authentication → Providers.
