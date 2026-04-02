@@ -19,6 +19,9 @@ services:
         sync: false
       - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
         sync: false
+      # Canonical app URL — fixes OAuth when the open tab origin is wrong (e.g. IDE preview on :10000).
+      - key: NEXT_PUBLIC_APP_URL
+        sync: false
       # Optional — AI “Polish & fill” in production (Ollama is not available on Render; use OpenAI):
       - key: OPENAI_API_KEY
         sync: false

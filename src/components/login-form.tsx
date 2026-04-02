@@ -13,11 +13,15 @@ export function LoginForm() {
     setLoading(provider);
     setMessage(null);
     const supabase = createClient();
-    const origin = window.location.origin;
+    // Prefer NEXT_PUBLIC_APP_URL so OAuth always returns to your real app URL (e.g. Render),
+    // not a preview/tunnel origin like https://localhost:10000 from an embedded browser.
+    const base =
+      (process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") || "") ||
+      window.location.origin;
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${origin}/auth/callback`,
+        redirectTo: `${base}/auth/callback`,
       },
     });
     if (error) {
