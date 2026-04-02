@@ -23,7 +23,7 @@ export function LoginForm({
       process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
     if (!base) {
       setMessage(
-        "Set NEXT_PUBLIC_APP_URL in Render to your public site URL (no trailing slash), then redeploy.",
+        "Could not determine your site URL for sign-in. Redeploy, or set NEXT_PUBLIC_APP_URL in Render.",
       );
       setLoading(null);
       return;

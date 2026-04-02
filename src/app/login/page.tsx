@@ -1,12 +1,21 @@
 import { LoginForm } from "@/components/login-form";
 
+/** OAuth redirect origin: explicit env, else Render’s public URL (no dashboard var required). */
+function oauthRedirectOrigin(): string | undefined {
+  const explicit = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
+  if (explicit) return explicit;
+  const render = process.env.RENDER_EXTERNAL_URL?.replace(/\/$/, "");
+  return render || undefined;
+}
+
+export const dynamic = "force-dynamic";
+
 export default function LoginPage() {
   const hasEnv =
     !!process.env.NEXT_PUBLIC_SUPABASE_URL &&
     !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  const oauthRedirectBase =
-    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") || undefined;
+  const oauthRedirectBase = oauthRedirectOrigin();
 
   if (!hasEnv) {
     return (

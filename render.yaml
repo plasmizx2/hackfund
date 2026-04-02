@@ -19,7 +19,7 @@ services:
         sync: false
       - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
         sync: false
-      # Required for OAuth: baked at build time. Must match your Render URL (no trailing slash).
+      # OAuth redirect (optional): explicit public URL. App also uses RENDER_EXTERNAL_URL if unset.
       - key: NEXT_PUBLIC_APP_URL
         value: https://hackfund.onrender.com
       # Optional — AI “Polish & fill” in production (Ollama is not available on Render; use OpenAI):
