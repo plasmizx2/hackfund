@@ -1,0 +1,24 @@
+# Render Blueprint — deploy as a Web Service from this repo.
+# Dashboard: New → Blueprint → connect repo, or attach this file when creating a Web Service.
+# Docs: https://render.com/docs/deploy-nextjs
+
+services:
+  - type: web
+    name: hackfund
+    runtime: node
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      # Set these in the Render dashboard (or mark sync: false and enter on first deploy):
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      # Optional — AI “Polish & fill” in production (Ollama is not available on Render; use OpenAI):
+      - key: OPENAI_API_KEY
+        sync: false

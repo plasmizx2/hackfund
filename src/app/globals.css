@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+/*
+ * Seashell garnet afternoon — full palette
+ * Peach #F6C992 · Coral #FD5A6D · Dusty blue #ACC0D3
+ * Rose #D396A6 · Teal #09A1A1 · Steel #5484A4
+ */
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --color-background: #0a121f;
+  --color-background-elevated: #121a28;
+  --color-foreground: #f7f2ed;
+  --color-muted: #6d7f92;
+  --color-muted-foreground: #a8bdd4;
+  --color-card: #121d2c;
+  --color-card-muted: rgba(18, 29, 44, 0.78);
+  --color-border: rgba(172, 192, 211, 0.22);
+  --color-border-strong: #5484a4;
+  --color-accent: #fd5a6d;
+  --color-accent-hover: #ff7a8a;
+  --color-accent-foreground: #1a080b;
+  --color-accent-muted: rgba(253, 90, 109, 0.18);
+  --color-highlight: #09a1a1;
+  --color-highlight-muted: rgba(9, 161, 161, 0.2);
+  --color-focus-ring: rgba(9, 161, 161, 0.42);
+  --color-secondary: #d396a6;
+  --color-secondary-hover: #e8b4c2;
+  --color-secondary-foreground: #2a1419;
+  --color-secondary-muted: rgba(211, 150, 166, 0.2);
+  --color-warm: #f6c992;
+  --color-dusty: #acc0d3;
+  --color-steel: #5484a4;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen font-sans text-foreground antialiased;
+    /* Layered atmosphere — steel, peach, teal, rose, coral, then deep base */
+    background-color: #070b12;
+    background-image:
+      radial-gradient(ellipse 110% 90% at 95% -15%, rgba(84, 132, 164, 0.28), transparent 52%),
+      radial-gradient(ellipse 90% 85% at -5% 10%, rgba(246, 201, 146, 0.14), transparent 48%),
+      radial-gradient(ellipse 75% 70% at 100% 65%, rgba(9, 161, 161, 0.16), transparent 52%),
+      radial-gradient(ellipse 65% 60% at 0% 85%, rgba(211, 150, 166, 0.14), transparent 50%),
+      radial-gradient(ellipse 55% 50% at 55% 45%, rgba(253, 90, 109, 0.07), transparent 58%),
+      radial-gradient(ellipse 100% 80% at 50% 120%, rgba(172, 192, 211, 0.08), transparent 45%),
+      linear-gradient(
+        168deg,
+        #0a1524 0%,
+        #0c121c 22%,
+        #0e1420 45%,
+        #120e1a 72%,
+        #080a10 100%
+      );
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background-color: rgba(246, 201, 146, 0.32);
+    color: var(--color-foreground);
+  }
+}
+
+@layer components {
+  .hf-input {
+    @apply w-full rounded-xl border border-border bg-card/90 px-3 py-2.5 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-highlight/55 focus:ring-2 focus:ring-focus-ring;
+  }
+
+  .hf-btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-accent/30 transition hover:brightness-110 active:scale-[0.99];
+  }
+
+  /* Secondary CTA — teal outline, reads as second brand color */
+  .hf-btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border-2 border-highlight/55 bg-highlight-muted/40 px-5 py-2.5 text-sm font-semibold text-highlight shadow-md shadow-highlight/10 transition hover:border-highlight hover:bg-highlight/15 hover:text-foreground active:scale-[0.99];
+  }
+
+  .hf-btn-ghost {
+    @apply rounded-full border border-border bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-muted-foreground transition hover:border-dusty/35 hover:bg-secondary-muted/30 hover:text-foreground;
+  }
+
+  /* Cards: glass + subtle multi-color wash */
+  .hf-card {
+    @apply rounded-2xl border border-border/90 backdrop-blur-xl;
+    background: linear-gradient(
+      155deg,
+      rgba(84, 132, 164, 0.12) 0%,
+      rgba(18, 29, 44, 0.82) 28%,
+      rgba(18, 26, 38, 0.78) 58%,
+      rgba(211, 150, 166, 0.06) 100%
+    );
+    box-shadow: 0 0 0 1px rgba(172, 192, 211, 0.06) inset, 0 24px 48px -24px rgba(0, 0, 0, 0.45);
+  }
+
+  .hf-link {
+    @apply text-highlight transition hover:text-warm hover:underline decoration-highlight/45 underline-offset-2;
+  }
+
+  .hf-muted {
+    @apply text-muted-foreground;
+  }
+
+  /* Optional: section strip with rose → teal fade */
+  .hf-band-rose-teal {
+    background: linear-gradient(
+      90deg,
+      rgba(211, 150, 166, 0.1) 0%,
+      rgba(9, 161, 161, 0.08) 50%,
+      rgba(84, 132, 164, 0.1) 100%
+    );
+  }
+}
