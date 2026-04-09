@@ -2,6 +2,7 @@
 
 import { LocationPicker } from "@/components/location-picker";
 import { createHackathonForm } from "@/app/(main)/hackathons/new/actions";
+import { slugify } from "@/lib/slugify";
 import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
 
@@ -33,14 +34,6 @@ const STEPS = [
   },
 ];
 
-function slugify(input: string) {
-  return input
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
-}
 
 /** ISO string → value for datetime-local input (browser local). */
 function isoToDatetimeLocal(iso: string): string {
