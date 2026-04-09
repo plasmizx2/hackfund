@@ -1,17 +1,9 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { slugify } from "@/lib/slugify";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
-function slugify(input: string) {
-  return input
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
-}
 
 function parseOptionalFloat(value: FormDataEntryValue | null): number | null {
   if (value === null || value === "") return null;
